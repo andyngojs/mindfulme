@@ -92,8 +92,8 @@ const Popup = () => {
     chrome.notifications.create({
       iconUrl: 'wxt.svg',
       type: 'basic',
-      title: 'Test Notification',
-      message: 'This is a test notification',
+      title: '❗️Test Nhắc nhở',
+      message: 'Hết phiên làm việc, hãy đứng lên đi lại chút 🧍‍♂️',
       priority: 2,
     });
   };
