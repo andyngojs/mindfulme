@@ -6,6 +6,7 @@ export default defineBackground(() => {
   // Initialize default alarms on installation
   chrome.runtime.onInstalled.addListener(async () => {
     try {
+      console.log('initializing_default_alarms');
       await initializeDefaultAlarms();
     } catch (e) {
       console.log('error_initializing_alarms', e);
@@ -14,11 +15,12 @@ export default defineBackground(() => {
 
   // Handle alarm events
   chrome.alarms.onAlarm.addListener((alarm: any) => {
-    const message =
+    const message: string =
       alarm.name === 'drinkWater'
         ? 'Đến giờ uống nước rồi 💧'
         : 'Hết phiên làm việc, hãy đứng lên đi lại chút 🧍‍♂️';
 
+    console.log('alarm fired', alarm, message);
     chrome.notifications.create({
       iconUrl: 'wxt.svg',
       type: 'basic',

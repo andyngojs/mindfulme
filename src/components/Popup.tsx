@@ -14,6 +14,24 @@ const Popup = () => {
   const [nextReminder, setNextReminder] = useState('...');
 
   useEffect(() => {
+    const grantedNoti = chrome.permissions.contains({
+      permissions: ['notifications'],
+      origins: ['*://*/']
+    });
+    if (!grantedNoti) {
+      chrome.permissions.request({
+        permissions: ['notifications'],
+        origins: ['*://*/']
+      }, (granted: boolean) => {
+        if (granted) {
+          console.log('Permission granted');
+        } else {
+          alert('Extension must need granted permission to show notifications.');
+        }
+      });
+      return;
+    }
+
     // Load saved preferences from storage
     loadPreferences(['hydrationOn', 'standUpOn']).then(result => {
       setHydrationOn(
@@ -85,7 +103,7 @@ const Popup = () => {
       <h1 className='text-xl font-semibold text-blue-600 mb-4'>💧 MindfulMe</h1>
 
       <div className='space-y-3'>
-        <div className='flex items-center justify-between border-b py-2'>
+        <div className='flex items-center justify-between border-b border-gray-200 py-2'>
           <label htmlFor='hydration-switch' className='text-sm font-medium'>
             Nhắc nhở uống nước
           </label>
@@ -99,7 +117,7 @@ const Popup = () => {
           </Switch.Root>
         </div>
 
-        <div className='flex items-center justify-between border-b py-2'>
+        <div className='flex items-center justify-between border-b border-gray-200 py-2'>
           <label htmlFor='standup-switch' className='text-sm font-medium'>
             Nhắc nhở đứng dậy
           </label>
@@ -130,7 +148,7 @@ const Popup = () => {
       </div>
 
       <footer className='mt-6 text-center text-xs text-gray-400'>
-        © 2025 DobeeTeam
+        © 2025 DobeeTeam. Developed by AndyngoJs.
       </footer>
     </div>
   );
