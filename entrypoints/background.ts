@@ -19,14 +19,16 @@ export default defineBackground(() => {
       alarm.name === 'drinkWater'
         ? 'Đến giờ uống nước rồi 💧'
         : 'Hết phiên làm việc, hãy đứng lên đi lại chút 🧍‍♂️';
+    const now = Date.now();
 
-    console.log('alarm fired', alarm, message);
-    chrome.notifications.create({
-      iconUrl: 'wxt.svg',
-      type: 'basic',
-      title: '❗️Nhắc nhở',
-      message,
-      priority: 2,
-    });
+    if (alarm.scheduledTime <= now && now - alarm.scheduledTime < 1000) {
+      chrome.notifications.create({
+        iconUrl: 'icon/128.png',
+        type: 'basic',
+        title: '❗️Nhắc nhở',
+        message,
+        priority: 2,
+      });
+    }
   });
 });

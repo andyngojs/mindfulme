@@ -90,7 +90,7 @@ const Popup = () => {
   const testNotify = () => {
     console.log('test notify');
     chrome.notifications.create({
-      iconUrl: 'wxt.svg',
+      iconUrl: 'icon/128.png',
       type: 'basic',
       title: '❗️Test Nhắc nhở',
       message: 'Hết phiên làm việc, hãy đứng lên đi lại chút 🧍‍♂️',
